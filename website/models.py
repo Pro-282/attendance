@@ -1,7 +1,6 @@
 from . import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
-# from sqlalchemy import Column, ForeignKey, Integer, Table
 
 class Level(db.Model):
     id = db.Column(db.Integer, primary_key=True)
