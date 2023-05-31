@@ -10,4 +10,4 @@ def home():
 
 @views.route('/lecturer', methods=['GET'])
 def lecturer_home():
-    return "<h2>A page to show login & signup for the lecturers <br>and some information about the usage of the system</h2>"
+    return render_template("lecturer.html", user=current_user)

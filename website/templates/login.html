@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}
+    Sign Up
+{% endblock %}
+
+{% block content %}
+<form method="POST">
+    <h3 align="center">Login</h3>
+
+    <div class="form-floating mb-2">
+      <input 
+        type="text" 
+        class="form-control" 
+        id="staffNo" 
+        name="staffNo" 
+        placeholder="Enter your Staff No."
+      >
+      <label for="staffNo">Staff Number</label>
+    </div>
+
+    <div class="form-floating mb-2">
+      <input 
+        type="password" 
+        class="form-control" 
+        id="password1" 
+        name="password1" 
+        placeholder="Enter password"
+      >
+      <label for="password1">Password</label>
+    </div>
+    
+    <br>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endblock %}

@@ -50,7 +50,7 @@ def sign_up():
         elif len(password1) < 7:
             flash('password must be greater than 7 characters.', category='error')
         else:
-            new_user = Lecturer(
+            new_user = Lecturer( # todo: change this to the table data and html input field
                 email=email, 
                 first_name=first_name, 
                 password=generate_password_hash(password1, method='sha256')

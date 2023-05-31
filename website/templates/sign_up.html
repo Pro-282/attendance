@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block title %}
+    Sign Up
+{% endblock %}
+
+{% block content %}
+  <form method="POST">
+    <h3 align="center">Sign Up</h3>
+
+    <div class="form-floating mb-2">
+      <input 
+        type="text" 
+        class="form-control" 
+        id="staffNo" 
+        name="staffNo" 
+        placeholder="Enter your Staff No."
+      >
+      <label for="staffNo">Staff Number</label>
+    </div>
+
+    <div class="form-floating mb-2">
+      <input 
+        type="text" 
+        class="form-control" 
+        id="firstName" 
+        name="firstName" 
+        placeholder="Enter first name"
+      >
+      <label for="firstName">First Name</label>
+    </div>
+
+    <div class="form-floating mb-2">
+      <input
+        type="text"
+        class="form-control"
+        id="lastName"
+        name="lastName"
+        placeholder="Enter Last Name"
+      >
+      <label for="lastNmae">Last Name</label>
+    </div>
+
+    <div class="form-floating mb-2">
+      <input 
+        type="email" 
+        class="form-control" 
+        id="email" 
+        name="email" 
+        placeholder="Enter email"
+      >
+      <label for="email">Email Address</label>
+    </div>
+
+    <div class="form-floating mb-2">
+      <input 
+        type="password" 
+        class="form-control" 
+        id="password1" 
+        name="password1" 
+        placeholder="Enter password"
+      >
+      <label for="password1">Password</label>
+    </div>
+    
+    <div class="form-floating mb-2">
+      <input 
+        type="password" 
+        class="form-control" 
+        id="password2" 
+        name="password2" 
+        placeholder="Confirm password"
+      >
+      <label for="password2">Confirm Password</label>
+    </div>
+
+    <!-- todo: I'm to implement a fetch to get a JSON of available faculty & deparments -->
+    <div class="form-floating mb-2">
+      <select class="form-select" id="faculty">
+        <option selected>Select your department</option> 
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+        <option value="4">Four</option>
+      </select>
+      <label for="faculty">Faculty</label>
+    </div>
+
+    <div class="form-floating mb-2">
+      <select class="form-select" id="department">
+        <option selected>Select your department</option> 
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+        <option value="4">Four</option>
+      </select>
+      <label for="department">department</label>
+    </div>
+
+    <br>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+{% endblock %}
