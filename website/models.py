@@ -2,56 +2,56 @@ from . import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 
-class Level(db.Model):
+class Levels(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    level = db.Column(db.String, unique=True, nullable=False)
+    level = db.Column(db.String(15), nullable=False, unique=True)
 
-    students = db.relationship('Student')
-    courses = db.relationship('Course')
+    students = db.relationship('Students')
+    courses = db.relationship('Courses')
 
-class Faculty(db.Model):
+class Faculties(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     faculty = db.Column(db.String(100), nullable=False)
 
-    departments = db.relationship('Department')
-    lecturers = db.relationship('Lecturer')
-    students = db.relationship('Student')
-    courses = db.relationship('Course')
+    departments = db.relationship('Departments')
+    lecturers = db.relationship('Lecturers')
+    students = db.relationship('Students')
+    courses = db.relationship('Courses')
 
-class Department(db.Model):
+class Departments(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     department = db.Column(db.String(100), nullable=False)
-    faculty_id = db.Column(db.Integer, db.ForeignKey('faculty.id'))
+    faculty_id = db.Column(db.Integer, db.ForeignKey('faculties.id'))
 
-    lecturers = db.relationship('Lecturer')
-    students = db.relationship('Student')
-    courses = db.relationship('Course')
+    lecturers = db.relationship('Lecturers')
+    students = db.relationship('Students')
+    courses = db.relationship('Courses')
 
-class Lecturer(db.Model, UserMixin):
+class Lecturers(db.Model, UserMixin):
     staff_no = db.Column(db.String(20), primary_key=True)
     first_name = db.Column(db.String(150), nullable=False)
     last_name = db.Column(db.String(150), nullable=False)
     email = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(150))
-    faculty_id = db.Column(db.Integer, db.ForeignKey('faculty.id'))
-    department_id = db.Column(db.Integer, db.ForeignKey('department.id'))
+    faculty_id = db.Column(db.Integer, db.ForeignKey('faculties.id'))
+    department_id = db.Column(db.Integer, db.ForeignKey('departments.id'))
 
-    courses = db.relationship('Course')
+    courses = db.relationship('Courses')
 
-class Student(db.Model):
+class Students(db.Model):
     matric_no = db.Column(db.String(15), primary_key=True)
     first_name = db.Column(db.String(150), nullable=False)
     last_name = db.Column(db.String(150), nullable=False)
-    level_id = db.Column(db.Integer, db.ForeignKey('level.id'))
-    faculty_id = db.Column(db.Integer, db.ForeignKey('faculty.id'))
-    department_id = db.Column(db.Integer, db.ForeignKey('department.id'))
+    level_id = db.Column(db.Integer, db.ForeignKey('levels.id'))
+    faculty_id = db.Column(db.Integer, db.ForeignKey('faculties.id'))
+    department_id = db.Column(db.Integer, db.ForeignKey('departments.id'))
 
-class Course(db.Model):
+class Courses(db.Model):
     course_code = db.Column(db.String(10), primary_key=True)
-    faculty_id = db.Column(db.Integer, db.ForeignKey('faculty.id'))
-    department = db.Column(db.Integer, db.ForeignKey('department.id'))
-    level = db.Column(db.Integer, db.ForeignKey('level.id'))
-    staff_no = db.Column(db.String(20), db.ForeignKey('lecturer.staff_no'))
+    faculty_id = db.Column(db.Integer, db.ForeignKey('faculties.id'))
+    department = db.Column(db.Integer, db.ForeignKey('departments.id'))
+    level = db.Column(db.Integer, db.ForeignKey('levels.id'))
+    staff_no = db.Column(db.String(20), db.ForeignKey('lecturers.staff_no'))
 
 # class Note(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)

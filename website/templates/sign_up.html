@@ -4,10 +4,12 @@
 {% endblock %}
 
 {% block content %}
+<body class="text-center" onload="facultyList()">
+
   <form method="POST">
     <h3 align="center">Sign Up</h3>
 
-    <div class="form-floating mb-2">
+    <div class="form-floating mb-3">
       <input 
         type="text" 
         class="form-control" 
@@ -18,7 +20,7 @@
       <label for="staffNo">Staff Number</label>
     </div>
 
-    <div class="form-floating mb-2">
+    <div class="form-floating mb-3">
       <input 
         type="text" 
         class="form-control" 
@@ -29,7 +31,7 @@
       <label for="firstName">First Name</label>
     </div>
 
-    <div class="form-floating mb-2">
+    <div class="form-floating mb-3">
       <input
         type="text"
         class="form-control"
@@ -40,7 +42,7 @@
       <label for="lastNmae">Last Name</label>
     </div>
 
-    <div class="form-floating mb-2">
+    <div class="form-floating mb-3">
       <input 
         type="email" 
         class="form-control" 
@@ -51,7 +53,7 @@
       <label for="email">Email Address</label>
     </div>
 
-    <div class="form-floating mb-2">
+    <div class="form-floating mb-3">
       <input 
         type="password" 
         class="form-control" 
@@ -62,7 +64,7 @@
       <label for="password1">Password</label>
     </div>
     
-    <div class="form-floating mb-2">
+    <div class="form-floating mb-3">
       <input 
         type="password" 
         class="form-control" 
@@ -73,30 +75,21 @@
       <label for="password2">Confirm Password</label>
     </div>
 
-    <!-- todo: I'm to implement a fetch to get a JSON of available faculty & deparments -->
-    <div class="form-floating mb-2">
-      <select class="form-select" id="faculty">
-        <option selected>Select your department</option> 
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-        <option value="4">Four</option>
-      </select>
+    <div class="form-floating mb-3">
+      <select name="faculty" class="form-select" id="faculty" 
+        onchange="updateDepts(this)"></select>
       <label for="faculty">Faculty</label>
     </div>
 
-    <div class="form-floating mb-2">
-      <select class="form-select" id="department">
-        <option selected>Select your department</option> 
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-        <option value="4">Four</option>
+    <div class="form-floating mb-3">
+      <select name="department" class="form-select" id="department">
+        <option disabled>Select a faculty First</option>
       </select>
       <label for="department">department</label>
     </div>
 
     <br>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-lg btn-primary">Create Account</button>
   </form>
+</body>
 {% endblock %}
