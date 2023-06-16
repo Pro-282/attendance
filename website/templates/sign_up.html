@@ -16,6 +16,7 @@
         id="staffNo" 
         name="staffNo" 
         placeholder="Enter your Staff No."
+        required
       >
       <label for="staffNo">Staff Number</label>
     </div>
@@ -27,6 +28,7 @@
         id="firstName" 
         name="firstName" 
         placeholder="Enter first name"
+        required
       >
       <label for="firstName">First Name</label>
     </div>
@@ -38,6 +40,7 @@
         id="lastName"
         name="lastName"
         placeholder="Enter Last Name"
+        required
       >
       <label for="lastNmae">Last Name</label>
     </div>
@@ -49,6 +52,7 @@
         id="email" 
         name="email" 
         placeholder="Enter email"
+        required
       >
       <label for="email">Email Address</label>
     </div>
@@ -60,6 +64,7 @@
         id="password1" 
         name="password1" 
         placeholder="Enter password"
+        required
       >
       <label for="password1">Password</label>
     </div>
@@ -71,18 +76,19 @@
         id="password2" 
         name="password2" 
         placeholder="Confirm password"
+        required
       >
       <label for="password2">Confirm Password</label>
     </div>
 
     <div class="form-floating mb-3">
       <select name="faculty" class="form-select" id="faculty" 
-        onchange="updateDepts(this)"></select>
+        onchange="updateDepts(this)" required></select>
       <label for="faculty">Faculty</label>
     </div>
 
     <div class="form-floating mb-3">
-      <select name="department" class="form-select" id="department">
+      <select name="department" class="form-select" id="department" required>
         <option disabled>Select a faculty First</option>
       </select>
       <label for="department">department</label>
