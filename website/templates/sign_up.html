@@ -5,97 +5,45 @@
 
 {% block content %}
 <body class="text-center" onload="facultyList()">
+<h1>Register As a Lecturer</h1>
 
-  <form method="POST">
-    <h3 align="center">Sign Up</h3>
+<form method="POST" class="form-register">
+  {{ form.hidden_tag() }}
+  <div class="form-floating mb-3">
+    {{ form.staff_no(class="form-control", placeholder="Staff Number") }}
+    {{ form.staff_no.label() }}
+  </div>
+  <div class="form-floating mb-3">
+    {{ form.first_name(class="form-control", placeholder="First Name") }}
+    {{ form.first_name.label() }}
+  </div>
+  <div class="form-floating mb-3">
+    {{ form.last_name(class="form-control", placeholder="Last Name") }}
+    {{ form.last_name.label() }}
+  </div>
+  <div class="form-floating mb-3">
+    {{ form.email_address(class="form-control", placeholder="Email Address") }}
+    {{ form.email_address.label() }}
+  </div>
+  <div class="form-floating mb-3">
+    {{ form.password1(class="form-control", placeholder="Password") }}
+    {{ form.password1.label() }}
+  </div>
+  <div class="form-floating mb-3">
+    {{ form.password2(class="form-control", placeholder="Password") }}
+    {{ form.password2.label() }}
+  </div>
+  <div class="form-floating mb-3">
+    {{ form.faculty(class="form-control", onchange="updateDepts(this)") }}
+    {{ form.faculty.label() }}
+  </div>
+  <div class="form-floating mb-3">
+    {{ form.department(class="form-control") }}
+    {{ form.department.label() }}
+  </div>
+  <br>
+  {{ form.submit(class="btn btn-lg btn-block btn-primary") }}
+</form>
 
-    <div class="form-floating mb-3">
-      <input 
-        type="text" 
-        class="form-control" 
-        id="staffNo" 
-        name="staffNo" 
-        placeholder="Enter your Staff No."
-        required
-      >
-      <label for="staffNo">Staff Number</label>
-    </div>
-
-    <div class="form-floating mb-3">
-      <input 
-        type="text" 
-        class="form-control" 
-        id="firstName" 
-        name="firstName" 
-        placeholder="Enter first name"
-        required
-      >
-      <label for="firstName">First Name</label>
-    </div>
-
-    <div class="form-floating mb-3">
-      <input
-        type="text"
-        class="form-control"
-        id="lastName"
-        name="lastName"
-        placeholder="Enter Last Name"
-        required
-      >
-      <label for="lastNmae">Last Name</label>
-    </div>
-
-    <div class="form-floating mb-3">
-      <input 
-        type="email" 
-        class="form-control" 
-        id="email" 
-        name="email" 
-        placeholder="Enter email"
-        required
-      >
-      <label for="email">Email Address</label>
-    </div>
-
-    <div class="form-floating mb-3">
-      <input 
-        type="password" 
-        class="form-control" 
-        id="password1" 
-        name="password1" 
-        placeholder="Enter password"
-        required
-      >
-      <label for="password1">Password</label>
-    </div>
-    
-    <div class="form-floating mb-3">
-      <input 
-        type="password" 
-        class="form-control" 
-        id="password2" 
-        name="password2" 
-        placeholder="Confirm password"
-        required
-      >
-      <label for="password2">Confirm Password</label>
-    </div>
-
-    <div class="form-floating mb-3">
-      <select name="faculty" class="form-select" id="faculty" 
-        onchange="updateDepts(this)" required></select>
-      <label for="faculty">Faculty</label>
-    </div>
-
-    <div class="form-floating mb-3">
-      <select name="department" class="form-select" id="department" required>
-        <option disabled>Select a faculty First</option>
-      </select>
-      <label for="department">department</label>
-    </div>
-
-    <br>
-    <button type="submit" class="btn btn-lg btn-primary">Create Account</button>
-  </form>
 </body>
 {% endblock %}
