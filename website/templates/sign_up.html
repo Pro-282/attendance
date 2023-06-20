@@ -26,12 +26,12 @@
     {{ form.email_address.label() }}
   </div>
   <div class="form-floating mb-3">
-    {{ form.password1(class="form-control", placeholder="Password") }}
-    {{ form.password1.label() }}
+    {{ form.password(class="form-control", placeholder="Password") }}
+    {{ form.password.label() }}
   </div>
   <div class="form-floating mb-3">
-    {{ form.password2(class="form-control", placeholder="Password") }}
-    {{ form.password2.label() }}
+    {{ form.confirm_password(class="form-control", placeholder="Password") }}
+    {{ form.confirm_password.label() }}
   </div>
   <div class="form-floating mb-3">
     {{ form.faculty(class="form-control", onchange="updateDepts(this)") }}
