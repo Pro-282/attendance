@@ -4,32 +4,24 @@
 {% endblock %}
 
 {% block content %}
-<form method="POST">
-    <h3 align="center">Login</h3>
+<body class="text-center">
+<h1>Login</h1>
+<form method="POST" class="form-register">
+  {{ form.hidden_tag() }}
+  <div class="form-floating mb-3">
+    {{ form.staff_no(class="form-control", placeholder="Staff Number") }}
+    {{ form.staff_no.label() }}
+  </div>
+  <div class="form-floating mb-3">
+    {{ form.password(class="form-control", placeholder="Password") }}
+    {{ form.password.label() }}
+  </div>
+  <div class="checkbox mb-4">
+    <h6>Do not have an account?</h6>
+    <a class="btn btn-sm btn-secondary" href="{{ url_for('auth.sign_up') }}">Sign Up</a>
+  </div>
+  {{ form.submit(class="btn btn-lg btn-block btn-primary mb-3") }}
 
-    <div class="form-floating mb-2">
-      <input 
-        type="text" 
-        class="form-control" 
-        id="staffNo" 
-        name="staffNo" 
-        placeholder="Enter your Staff No."
-      >
-      <label for="staffNo">Staff Number</label>
-    </div>
-
-    <div class="form-floating mb-2">
-      <input 
-        type="password" 
-        class="form-control" 
-        id="password1" 
-        name="password1" 
-        placeholder="Enter password"
-      >
-      <label for="password1">Password</label>
-    </div>
-    
-    <br>
-    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+</body>
 {% endblock %}

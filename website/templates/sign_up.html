@@ -42,7 +42,11 @@
     {{ form.department.label() }}
   </div>
   <br>
-  {{ form.submit(class="btn btn-lg btn-block btn-primary") }}
+  <div class="checkbox mb-4">
+    <h6>Already have an Account?</h6>
+    <a class="btn btn-sm btn-secondary" href="{{ url_for('auth.login') }}">Sign Up</a>
+  </div>
+  {{ form.submit(class="btn btn-lg btn-block btn-primary mb-3") }}
 </form>
 
 </body>
