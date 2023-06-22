@@ -1,29 +1,25 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from .models import Lecturers, Departments, Faculties
-from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
-from website.forms import RegisterForm
+from website.forms import RegisterForm, loginForm
 
 auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == 'POST':
-        email = request.form.get('email')
-        password = request.form.get('password')
-
-        user = Lecturers.query.filter_by(email=email).first()
-        if user:
-            if check_password_hash(user.password, password):
-                flash('Logged in successfully!', category='success')
-                login_user(user, remember=True)
-                return redirect(url_for('views.home'))
-            else:
-                flash('Incorrect password, try again.', category='danger')
+    form = loginForm()
+    if form.validate_on_submit():
+        attempted_user = Lecturers.query.filter_by(id=form.staff_no.data).first()
+        if attempted_user and attempted_user.check_password_correction(
+            attempted_password=form.password.data
+        ):
+            login_user(attempted_user)
+            flash(f'Success! You are logged in as: {attempted_user.first_name}', category='success')
+            return redirect(url_for('views.lecturer_home'))
         else:
-            flash('Email does not exist.', category='danger')
-    return render_template("login.html", user=current_user)
+            flash('Username and password are not match! Please try again', category='danger')
+    return render_template('login.html', form=form, user=current_user)
 
 @auth.route('/logout')
 @login_required
@@ -46,18 +42,21 @@ def sign_up():
                             filter_by(department=form.department.data).
                             first()).id
             user_to_create = Lecturers(
-                    staff_no=form.staff_no.data,
+                    id=form.staff_no.data,
                     first_name=form.first_name.data,
+                    last_name=form.last_name.data,
                     email=form.email_address.data,
                     password=form.password.data,
                     faculty_id=form.faculty.data,
                     department_id=department_id
                 )
-            # db.session.add(user_to_create)
-            # db.session.commit()
-            return redirect(url_for('views.home'))
+            db.session.add(user_to_create)
+            db.session.commit()
+            flash('Account successfully created', category='success')
+            login_user(user_to_create)
+            return redirect(url_for('views.lecturer_home'))
         if form.errors != {}:
             for err_msg in form.errors.values():
-                flash(f'There was an error with creating a user: {err_msg}', category='danger')
+                flash(f'There was an error with creating an account: {err_msg}', category='danger')
         
     return render_template('sign_up.html', form=form, user=current_user)

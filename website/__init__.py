@@ -1,16 +1,21 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
+from flask_bcrypt import Bcrypt
+from flask_login import LoginManager
 
 
 db = SQLAlchemy()
 DB_NAME = "attendance.db"
+app = Flask(__name__)
+bcrypt = Bcrypt(app)
+login_manager = LoginManager(app)
 
 def create_app():
-    app = Flask(__name__)
     app.config['SECRET_KEY'] = '5f2ac867f9c5aed0000edfd5'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     db.init_app(app)
+
 
     from .views import views
     from .auth import auth

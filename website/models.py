@@ -1,7 +1,10 @@
-from . import db
+from . import db, bcrypt, login_manager
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 
+@login_manager.user_loader
+def load_User(user_id):
+    return Lecturers.query.get(user_id)
 class Levels(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     level = db.Column(db.String(15), nullable=False, unique=True)
@@ -28,15 +31,26 @@ class Departments(db.Model):
     courses = db.relationship('Courses')
 
 class Lecturers(db.Model, UserMixin):
-    staff_no = db.Column(db.String(20), primary_key=True)
+    id = db.Column(db.String(20), primary_key=True) #Lecturers Staff Number is the id
     first_name = db.Column(db.String(150), nullable=False)
     last_name = db.Column(db.String(150), nullable=False)
     email = db.Column(db.String(150), unique=True)
-    password = db.Column(db.String(150))
+    password_hash = db.Column(db.String(150))
     faculty_id = db.Column(db.Integer, db.ForeignKey('faculties.id'))
     department_id = db.Column(db.Integer, db.ForeignKey('departments.id'))
 
     courses = db.relationship('Courses')
+
+    @property
+    def password(self):
+        return self.password
+    
+    @password.setter
+    def password(self, plain_text_password):
+        self.password_hash = bcrypt.generate_password_hash(plain_text_password).decode('utf-8')
+
+    def check_password_correction(self, attempted_password):
+        return bcrypt.check_password_hash(self.password_hash, attempted_password)
 
 class Students(db.Model):
     matric_no = db.Column(db.String(15), primary_key=True)
@@ -51,10 +65,4 @@ class Courses(db.Model):
     faculty_id = db.Column(db.Integer, db.ForeignKey('faculties.id'))
     department = db.Column(db.Integer, db.ForeignKey('departments.id'))
     level = db.Column(db.Integer, db.ForeignKey('levels.id'))
-    staff_no = db.Column(db.String(20), db.ForeignKey('lecturers.staff_no'))
-
-# class Note(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     data = db.Column(db.String(10000))
-#     date = db.Column(db.DateTime(timezone=True), default=func.now())
-#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    staff_no = db.Column(db.String(20), db.ForeignKey('lecturers.id'))
