@@ -20,14 +20,19 @@ def create_app():
     from .views import views
     from .auth import auth
     from .api import api
+    from .forms import form
 
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
     app.register_blueprint(api, url_prefix='/')
+    app.register_blueprint(form, url_prefix='/')
 
     from .models import Lecturers, Students, Levels, Faculties, Departments, Courses
 
     create_database(app)
+    
+    login_manager.login_view = 'auth.login'
+    login_manager.login_message_category = 'info'
 
     return app
 

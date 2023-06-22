@@ -25,6 +25,7 @@ def login():
 @login_required
 def logout():
     logout_user()
+    flash('You have been logged out!', category='info')
     return redirect(url_for('auth.login'))
 
 @auth.route('/sign-up', methods=['GET', 'POST'])
@@ -52,7 +53,7 @@ def sign_up():
                 )
             db.session.add(user_to_create)
             db.session.commit()
-            flash('Account successfully created', category='success')
+            flash(f'Account successfully created, You are now logged in as: {user_to_create.first_name}', category='success')
             login_user(user_to_create)
             return redirect(url_for('views.lecturer_home'))
         if form.errors != {}:
