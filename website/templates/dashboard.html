@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Dashboard
+{% endblock %}
+
+{% block content %}
+<body>
+  <div class="text-center">
+    <h1 class="mb-3">Welcome To Your Dashboard {{ user.first_name }}! </h1>
+    <h5 class="mb-1">You can take attendance for courses you take, but add them to
+      the list first by clicking on the 'add new course' button. you can also get 
+      attendance records for each course. 
+    </h5>
+  </div>
+  <h2 class="">Courses</h2>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Course Code</th>
+        <th scope="col">Course Title</th>
+        <th scope="col">Take Attendance</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for course in courses %}
+      <tr>
+        <td>{{ course.course_code }}</td>
+        <td>{{ course.course_title }}</td>
+        <td><a class="btn btn-primary btn-sm" 
+          href="/take-attendance-{{course.course_code}}" 
+          role="button">Take Attendance</a>
+        </td>
+      </tr>
+      {% endfor %}
+      
+    </tbody>
+  </table>
+
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" 
+    data-bs-target="#addCourseModal">Add New Course
+  </button>
+
+  <!-- Add course Modal -->
+  <div class="modal fade modal-lg" id="addCourseModal" tabindex="-1" 
+    aria-labelledby="addCourseModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="addCourseModalLabel">
+            Add a Course to your Dashboard</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" 
+            aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="POST" class="form-register">
+            {{ form.hidden_tag() }}
+            <div class="form-floating mb-3">
+              {{ form.course_code(class="form-control", placeholder="Course Code") }}
+              {{ form.course_code.label() }}
+            </div>
+            <div class="form-floating mb-3">
+              {{ form.course_title(class="form-control", placeholder="Course Title") }}
+              {{ form.course_title.label() }}
+            </div>
+            <div class="form-floating mb-3">
+              {{ form.level(class="form-control") }}
+              {{ form.level.label() }}
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-lg btn-block btn-primary">
+            Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</body>
+{% endblock %}

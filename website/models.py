@@ -62,7 +62,8 @@ class Students(db.Model):
 
 class Courses(db.Model):
     course_code = db.Column(db.String(10), primary_key=True)
+    course_title = db.Column(db.String(150), nullable=False)
     faculty_id = db.Column(db.Integer, db.ForeignKey('faculties.id'))
-    department = db.Column(db.Integer, db.ForeignKey('departments.id'))
-    level = db.Column(db.Integer, db.ForeignKey('levels.id'))
+    department_id = db.Column(db.Integer, db.ForeignKey('departments.id'))
+    level_id = db.Column(db.Integer, db.ForeignKey('levels.id'))
     staff_no = db.Column(db.String(20), db.ForeignKey('lecturers.id'))
