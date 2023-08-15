@@ -19,7 +19,7 @@ def create_app():
 
     from .views import views
     from .auth import auth
-    from .api import api
+    from .api import api    
     from .forms import form
 
     app.register_blueprint(views, url_prefix='/')

@@ -47,7 +47,3 @@ function updateDepts(selected) {
     departmentSelect.add(option)
   }
 }
-
-function levelList() {
-  
-}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}
+    Sign Up
+{% endblock %}
+
+{% block content %}
+<body class="text-center">
+<h1>Login</h1>
+<form method="POST" class="form-register">
+  {{ form.hidden_tag() }}
+  <div class="form-floating mb-3">
+    {{ form.matric_no(class="form-control", placeholder="Matric Number") }}
+    {{ form.matric_no.label() }}
+  </div>
+  <div class="form-floating mb-3">
+    {{ form.first_name(class="form-control", placeholder="Password") }}
+    {{ form.first_name.label() }}
+  </div>
+  <div class="checkbox mb-4">
+    <h6>Not enrolled yet?</h6>
+    <a class="btn btn-sm btn-secondary" href="{{ url_for('auth.enroll') }}">Enroll</a>
+  </div>
+  {{ form.submit(class="btn btn-lg btn-block btn-primary mb-3") }}
+
+</form>
+</body>
+{% endblock %}
