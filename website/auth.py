@@ -53,7 +53,8 @@ def sign_up():
                 )
             db.session.add(user_to_create)
             db.session.commit()
-            flash(f'Account successfully created, You are now logged in as: {user_to_create.first_name}', category='success')
+            flash(f'Account successfully created, You are now logged in as: \
+                  {user_to_create.first_name}', category='success')
             login_user(user_to_create)
             return redirect(url_for('views.dashboard'))
         if form.errors != {}:
@@ -104,7 +105,7 @@ def student_login():
             submitted_name=form.first_name.data
         ):
             flash(f'Success! You are logged in as: {attempted_user.first_name}', category='success')
-            return redirect(url_for('views.student_dashboard', matric_no=attempted_user.matric_no))#todo: change to student dashboard
+            return redirect(url_for('views.student_dashboard', matric_no=attempted_user.matric_no))
         else:
             flash('Account not found! Please try again', category='danger')
-    return render_template('student_login.html', form=form, user=current_user) #todo: change
+    return render_template('student_login.html', form=form, user=current_user)

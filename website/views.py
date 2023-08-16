@@ -81,7 +81,8 @@ def student_dashboard():
                           Column('first_name', String), autoload_with=db.engine,
                           extend_existing=True)
             # Insert data into the table
-            db.session.execute(table.insert().values({"matric_no": user.matric_no, "first_name": user.first_name}))
+            db.session.execute(table.insert().values({"matric_no": user.matric_no,
+                                                      "first_name": user.first_name}))
             db.session.commit()
         flash("Courses Added Successfully", category='info')
         return redirect(url_for('views.student_dashboard', matric_no=user.matric_no))
