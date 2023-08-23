@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for
 from flask_login import login_required, current_user
-from . import db
+from dependencies .dependent import db
 from .forms import CourseForm, coursesToEnroll
 from .models import Levels, Courses, Students, attendance_base, Enrolled_courses
 from sqlalchemy import Column, not_, select, Table, Integer, String
@@ -95,3 +95,8 @@ def student_dashboard():
 def take_attendance(course_code):
     print(course_code)
     return f'<h1>Attandance page for {course_code}</h1>'
+
+@views.route('/socket')
+def index():
+    return render_template('index.html')
+

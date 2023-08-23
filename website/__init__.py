@@ -1,31 +1,32 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
-from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
+from dependencies.dependent import db, socketio, bcrypt, login_manager
+from .websocket import websocket_bp
 
-
-db = SQLAlchemy()
 DB_NAME = "attendance.db"
 app = Flask(__name__)
-bcrypt = Bcrypt(app)
-login_manager = LoginManager(app)
+bcrypt.init_app(app)
+login_manager.init_app(app)
 
 def create_app():
     app.config['SECRET_KEY'] = '5f2ac867f9c5aed0000edfd5'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     db.init_app(app)
 
-
     from .views import views
     from .auth import auth
-    from .api import api    
+    from .api import api
     from .forms import form
+
+    socketio.init_app(app)
 
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
     app.register_blueprint(api, url_prefix='/')
     app.register_blueprint(form, url_prefix='/')
+    app.register_blueprint(websocket_bp, url_prefix='/websocket')
 
     from .models import Lecturers, Students, Levels, Faculties, Departments, Courses
 
