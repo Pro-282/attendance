@@ -47,3 +47,35 @@ function updateDepts(selected) {
     departmentSelect.add(option)
   }
 }
+
+// Step 1: Parse the URL to extract the query parameter value
+const url = new URL(window.location.href);
+const paramValue = url.searchParams.get("matric_no");
+
+// Step 2: Build the request body with the extracted parameter value
+const requestBody = JSON.stringify({
+  'matric_no': paramValue
+});
+
+window.addEventListener("DOMContentLoaded", (event) => {
+  document.getElementById("enrollButton").addEventListener("click", function() {
+    console.log("clicked")
+    fetch('/api/enroll-fingerprint', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: requestBody,
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Handle the response from the backend
+        document.getElementById("enroll-message").innerHTML = data.message
+        // You can display the fingerprint position in the frontend
+        console.log("Fingerprint Position:", data.position);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+  })
+});
