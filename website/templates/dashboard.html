@@ -20,6 +20,7 @@
         <th scope="col">Course Code</th>
         <th scope="col">Course Title</th>
         <th scope="col">Take Attendance</th>
+        <th scope="col">Attendance Records</th>
       </tr>
     </thead>
     <tbody>
@@ -28,8 +29,10 @@
         <td>{{ course.course_code }}</td>
         <td>{{ course.course_title }}</td>
         <td><a class="btn btn-primary btn-sm" 
-          href="/take-attendance-{{course.course_code}}" 
+          href="/take-attendance?course={{course.course_code}}" 
           role="button">Take Attendance</a>
+        </td>
+        <td><a class="btn btn-info btn-sm" href="#" role="button">Download Record</a>
         </td>
       </tr>
       {% endfor %}

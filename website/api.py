@@ -34,9 +34,6 @@ def enroll():
     data = request.get_json()
     matric_no = data.get('matric_no')
     user=Students.query.filter_by(matric_no=matric_no).first()
-    print(user.finger_id)
-    print(user.matric_no)
-    print(user.first_name)
 
     ## Tries to initialize the sensor
     try:

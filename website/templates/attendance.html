@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Dashboard
+{% endblock %}
+
+{% block head %}
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script type="text/javascript">
+        const winUrl = new URL(window.location.href);
+        const courseValue = winUrl.searchParams.get("course");
+
+        var socket = io.connect('http://' + document.domain + ':' + location.port + '/websocket/' + courseValue);
+
+        socket.on('connect', function() {
+            console.log('Connected to server via WebSocket');
+        });
+
+        socket.on('attendance_status', function(data) {
+            var statusElement = document.getElementById('attendance-status');
+            statusElement.textContent = 'Attendance Status: ' + data.status;
+        });
+
+        socket.on('attendance_result', function(data) {
+            var resultElement = document.getElementById('attendance-result');
+            if ('error' in data) {
+                resultElement.textContent = 'Error: ' + data.error;
+                // todo: this might be a console.log()
+            } else {
+                resultElement.textContent = 'Name: ' + data.name + ', Matric Number: ' + data.matric_no;
+            }
+        });
+
+        socket.on('server_message', function(data) {
+            console.log(data.message)
+        });
+
+        function startAttendance() {
+            socket.emit('start_attendance');
+        }
+
+        function stopAttendance() {
+            socket.emit('stop_attendance');
+        }
+    </script>
+</head> 
+{% endblock %}
+
+{% block content %}
+<body>
+    <h1>{{ course.course_title }} ({{ course.course_code }})<br>Attendance</h1>
+    <p id="attendance-status">Attendance Status: Yet to start</p>
+    <button class="btn btn-info mb-3" onclick="startAttendance()">Start Attendance</button>
+    <button class="btn btn-warning mb-3"onclick="stopAttendance()">Stop Attendance</button>
+    <p id="attendance-result">Attendance Result:</p>
+</body>
+{% endblock %}

@@ -57,7 +57,8 @@ def fingerprint_loop():
 
               # todo: mark the attendance list present
               # todo: open the servo
-             
+            else:
+              emit('attendance_result', {'error': f'{is_student.matric_no} is not registered for this Course'})
           # Replace the follfowing with your database query logic
           user_details = {
             'name': f'{is_student.first_name}',
@@ -74,15 +75,17 @@ def fingerprint_loop():
   
   fingerprint_loop_running = False
 
-@socketio.on('connect', namespace='/websocket<courseCode>')
+@socketio.on('connect', namespace='/websocket/<courseCode>')
 def on_connect(courseCode):
+  print("socket connection asked")
   global attendanceCourseCode
   attendanceCourseCode = courseCode
-  emit('server_message', {'message': 'Connected to WebSocket'})
+  print(f"attendance course code has changed to {attendanceCourseCode}")
+  emit('server_message', {'message': f'Connected to WebSocket for {courseCode}'})
 
-@socketio.on('custom_event')
-def handle_custom_event(data):
-  emit('server_message', {'message': 'Received data: ' + data['data']})
+# @socketio.on('custom_event')
+# def handle_custom_event(data):
+#   emit('server_message', {'message': 'Received data: ' + data['data']})
 
 # WebSocket event to start the fingerprint loop
 @socketio.on('start_attendance')

@@ -90,13 +90,11 @@ def student_dashboard():
     return render_template("student_dashboard.html", user=user,\
                            enrolled=enrolled_courses, form=form, disabled=disable_submit)
 
-@views.route('/take-attendance-<course_code>')
+@views.route('/take-attendance')
 @login_required
-def take_attendance(course_code):
+def take_attendance():
+    course_code = request.args.get('course')
+    user=current_user
+    course = Courses.query.filter_by(course_code=course_code).first()
     print(course_code)
-    return f'<h1>Attandance page for {course_code}</h1>'
-
-@views.route('/socket')
-def index():
-    return render_template('index.html')
-
+    return render_template('attendance.html', user=user, course=course)
