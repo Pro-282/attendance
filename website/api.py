@@ -31,12 +31,16 @@ def faculties():
 
 @api.route('/api/enroll-fingerprint', methods=['GET', 'POST'])
 def enroll():
-    matric_no = request.args.get('matric_no')
+    data = request.get_json()
+    matric_no = data.get('matric_no')
     user=Students.query.filter_by(matric_no=matric_no).first()
+    print(user.finger_id)
+    print(user.matric_no)
+    print(user.first_name)
 
     ## Tries to initialize the sensor
     try:
-        f = PyFingerprint('/dev/ttyS0', 57600, 0xFFFFFFFF, 0x00000000)
+        f = PyFingerprint('/dev/ttyUSB0', 57600, 0xFFFFFFFF, 0x00000000)
 
         if ( f.verifyPassword() == False ):
             raise ValueError('The given fingerprint sensor password is wrong!')
@@ -66,7 +70,7 @@ def enroll():
 
         if ( positionNumber >= 0 ):
             print('Template already exists at position #' + str(positionNumber))
-            exit(0)
+            return jsonify({"message": "Your fingerprint exists already", "position": positionNumber})
 
         print('Remove finger...')
         time.sleep(2)
