@@ -3,7 +3,8 @@ from flask_login import login_required, current_user
 from dependencies .dependent import db
 from .forms import CourseForm, coursesToEnroll
 from .models import Levels, Courses, Students, attendance_base, Enrolled_courses
-from sqlalchemy import Column, not_, select, Table, Integer, String
+from sqlalchemy import Column, not_, select, Table, Integer, String, text
+from datetime import datetime
 
 views = Blueprint('views', __name__)
 
@@ -96,5 +97,14 @@ def take_attendance():
     course_code = request.args.get('course')
     user=current_user
     course = Courses.query.filter_by(course_code=course_code).first()
-    print(course_code)
+    try:
+        current_date = datetime.now().strftime('%d-%m-%Y')
+        create_column_query = text(f"ALTER TABLE {course.course_code} ADD '{current_date}' VARCHAR(15) DEFAULT 'Absent'")
+        with db.engine.connect() as connection:
+            connection.execute(create_column_query)
+    except Exception as e:
+         if 'duplicate column name' in str(e):
+             print(f"column already exists: {str(e)}")
+         else:
+             print(f"error: {str(e)}")
     return render_template('attendance.html', user=user, course=course)

@@ -2,11 +2,10 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
-from dependencies.dependent import db, socketio, bcrypt, login_manager
+from dependencies.dependent import db, socketio, bcrypt, login_manager, app
 from .websocket import websocket_bp
 
 DB_NAME = "attendance.db"
-app = Flask(__name__)
 bcrypt.init_app(app)
 login_manager.init_app(app)
 

@@ -11,7 +11,8 @@
         const winUrl = new URL(window.location.href);
         const courseValue = winUrl.searchParams.get("course");
 
-        var socket = io.connect('http://' + document.domain + ':' + location.port + '/websocket/' + courseValue);
+        var socket = io.connect('http://' + document.domain + ':' + location.port + '/websocket', 
+                        {query: {courseCode: courseValue}});
 
         socket.on('connect', function() {
             console.log('Connected to server via WebSocket');
@@ -37,7 +38,7 @@
         });
 
         function startAttendance() {
-            socket.emit('start_attendance');
+            socket.emit('start_attendance',);
         }
 
         function stopAttendance() {
