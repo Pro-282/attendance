@@ -1,10 +1,12 @@
-from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for
+from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for, send_from_directory
+from flask import make_response
 from flask_login import login_required, current_user
-from dependencies .dependent import db
+from dependencies .dependent import db, create_record_table, CSV_FOLDER
 from .forms import CourseForm, coursesToEnroll
 from .models import Levels, Courses, Students, attendance_base, Enrolled_courses
 from sqlalchemy import Column, not_, select, Table, Integer, String, text
 from datetime import datetime
+import os
 
 views = Blueprint('views', __name__)
 
@@ -108,3 +110,15 @@ def take_attendance():
          else:
              print(f"error: {str(e)}")
     return render_template('attendance.html', user=user, course=course)
+
+@views.route('/get-records/<course_code>', methods=['GET'])
+@login_required
+def get_records(course_code):
+    filename = f"csv_records/{course_code}_attendance.csv"
+    full_path = os.path.join(CSV_FOLDER, filename)
+    print(f"Trying to send file from: {full_path}")
+    create_record_table(course_code, filename)
+
+    return send_from_directory(os.path.abspath(CSV_FOLDER), f"{course_code}_attendance.csv", as_attachment=True, download_name=f"{course_code}_attendance.csv")
+
+    # return send_from_directory(CSV_FOLDER, filename, as_attachment=True, download_name=filename)
