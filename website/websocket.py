@@ -6,6 +6,7 @@ import time
 from pyfingerprint.pyfingerprint import PyFingerprint
 from website.models import Students, Enrolled_courses
 from dependencies.dependent import db, socketio
+# from dependencies.dependent import servo_init
 from sqlalchemy import text
 from datetime import datetime
 
@@ -20,6 +21,7 @@ attendanceCourseCode = "nil"
 # Function to check fingerprints and emit results
 def fingerprint_loop(app):
   global fingerprint_loop_running
+  # pwm = servo_init() 
   try:
     with app.app_context():
       
@@ -58,12 +60,17 @@ def fingerprint_loop(app):
                     connection.execute(update_query)
                     connection.commit()
                   # todo: open a servo
+                  # Turn the servo to 90 degrees
+                  # pwm.changeDutyCycle(7.5)
                   user_details = {
                     'name': f'{is_student.first_name}',
                     'matric_no': f'{is_student.matric_no}'
                   }
                   socketio.emit('attendance_result', user_details, 
                                 namespace='/websocket', room=attendanceCourseCode)
+                  time.sleep(5)
+                  # return the servo to 0 degrees
+                  # pwm.changeDutyCycle(2.5)
                 else:
                   socketio.emit('attendance_result',
                                 {'error': f'{is_student.matric_no} is not enrolled\

@@ -120,5 +120,3 @@ def get_records(course_code):
     create_record_table(course_code, filename)
 
     return send_from_directory(os.path.abspath(CSV_FOLDER), f"{course_code}_attendance.csv", as_attachment=True, download_name=f"{course_code}_attendance.csv")
-
-    # return send_from_directory(CSV_FOLDER, filename, as_attachment=True, download_name=filename)

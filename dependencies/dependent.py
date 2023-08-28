@@ -6,7 +6,8 @@ from flask import Flask
 from sqlalchemy import MetaData, Table, create_engine, text
 import csv
 import os
-import sqlite3
+# import RPi.GPIO as GPIO
+import time
 
 socketio = SocketIO()
 db = SQLAlchemy()
@@ -41,3 +42,13 @@ def create_record_table(table_name, output_filename):
   print(f"Data from {table_name} has been written to {output_filename}")
 
   return os.path.join(CSV_FOLDER, output_filename)
+
+# def servo_init():
+#   GPIO.setmode(GPIO.BCM)
+#   GPIO.setwarnings(False)
+#   GPIO.setup(17, GPIO.OUT)
+
+#   # Set the GPIO pin to PWM and set the frequency to 50 Hz
+#   pwm = GPIO.PWM(17, 50)
+#   pwm.start(0)
+#   return pwm
